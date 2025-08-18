@@ -5,15 +5,9 @@ public partial class QuitButton : Button
 {
     private Button quitButton;
 
-    public override void _Ready()
-    {
-        base._Ready();
-
-        quitButton.Pressed += QuitButtonPressed;
-    }
-
-    private void QuitButtonPressed()
+    public override void _Pressed()
     {
         GetTree().Quit();
     }
+
 }
