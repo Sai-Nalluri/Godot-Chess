@@ -1,6 +1,6 @@
 using Godot;
 using GodotChess.UI;
-using System;
+using GodotChess.Core;
 
 namespace GodotChess.UIScripts;
 
