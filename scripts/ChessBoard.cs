@@ -12,11 +12,18 @@ public partial class ChessBoard : Node2D
     private Square[,] squares = new Square[8, 8];
 
     BoardTheme boardTheme;
+    PieceTheme pieceTheme;
+    Board board;
 
     public override void _Ready()
     {
         base._Ready();
+
         boardTheme = new();
+        pieceTheme = new();
+        board = new();
+
+        board.LoadStartPosition();
         CreateChessBoard();
 
         Connect(SignalName.SquareClicked, new Callable(this, nameof(HighlightSquare)));
@@ -41,6 +48,11 @@ public partial class ChessBoard : Node2D
                     file * 80 + (windowSize.X / 2 - (8 * 40)),
                     rank * 80 + (windowSize.Y / 2 - (8 * 40))
                 );
+
+                int piece = board.Square[rank * 8 + file];
+                GD.Print($"Piece: {piece} is on rank: {rank}, file: {file}.");
+                GD.Print($"SetPieceSprite: piece={piece}, texture={pieceTheme.GetPieceTexture(piece)}");
+                square.SetPieceSprite(pieceTheme.GetPieceTexture(piece));
 
                 squares[rank, file] = square;
                 AddChild(square);
