@@ -50,12 +50,8 @@ public partial class ChessBoard : Node2D
                 );
 
                 int piece = board.Square[rank * 8 + file];
-                Sprite2D pieceSprite = new Sprite2D();
+                Sprite2D pieceSprite = square.GetNode<Sprite2D>("PieceSprite");
                 pieceSprite.Texture = pieceTheme.GetPieceTexture(piece);
-                pieceSprite.Position = new Vector2(square.Position.X + 40, square.Position.Y + 40);
-                pieceSprite.Scale = new Vector2((float)0.2, (float)0.2);
-                pieceSprite.ZIndex = 3;
-                AddChild(pieceSprite);
 
                 squares[rank, file] = square;
                 AddChild(square);

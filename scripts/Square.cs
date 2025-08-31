@@ -10,12 +10,14 @@ public partial class Square : Node2D
     [Export(PropertyHint.Range, "0, 7, 1")]
     public int File { get; private set; }
     private ColorRect _background;
+    private Sprite2D _pieceSprite;
 
     public override void _Ready()
     {
         base._Ready();
 
         _background = GetNode<ColorRect>("Background");
+        _pieceSprite = GetNode<Sprite2D>("PieceSprite");
     }
 
     public void Initialize(int rank, int file)
