@@ -33,6 +33,7 @@ public partial class ChessBoard : Node2D
     {
         GD.Print(rank + " " + file);
         GD.Print(rank * 8 + file);
+        GD.Print($"Piece on square: {board.Square[rank * 8 + file]}");
         SetSquareColor(rank, file, boardTheme.lightSquares.selected, boardTheme.darkSquares.selected);
     }
 
@@ -46,15 +47,15 @@ public partial class ChessBoard : Node2D
                 square.Initialize(rank, file);
                 var windowSize = DisplayServer.ScreenGetSize();
                 square.Position = new Vector2(
-                    file * 80 + (windowSize.X / 2 - (8 * 40)),
-                    rank * 80 + (windowSize.Y / 2 - (8 * 40))
+                    square.File * 80 + (windowSize.X / 2 - 320),
+                    square.Rank * 80 + (windowSize.Y / 2 - 320)
                 );
 
-                int piece = board.Square[rank * 8 + file];
+                int piece = board.Square[square.Rank * 8 + square.File];
                 Sprite2D pieceSprite = square.GetNode<Sprite2D>("PieceSprite");
                 pieceSprite.Texture = pieceTheme.GetPieceTexture(piece);
 
-                squares[rank, file] = square;
+                squares[square.Rank, square.File] = square;
                 AddChild(square);
             }
         }
