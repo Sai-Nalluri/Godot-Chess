@@ -32,6 +32,7 @@ public partial class ChessBoard : Node2D
     public void HighlightSquare(int rank, int file)
     {
         GD.Print(rank + " " + file);
+        GD.Print(rank * 8 + file);
         SetSquareColor(rank, file, boardTheme.lightSquares.selected, boardTheme.darkSquares.selected);
     }
 
@@ -93,7 +94,7 @@ public partial class ChessBoard : Node2D
 
                 if (file >= 0 && file < 8 && rank >= 0 && rank < 8)
                 {
-                    EmitSignal(SignalName.SquareClicked, rank, file);
+                    EmitSignal(SignalName.SquareClicked, squares[rank, file].Rank, squares[rank, file].File);
                 }
             }
         }
