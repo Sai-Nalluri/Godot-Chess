@@ -34,6 +34,7 @@ public partial class ChessBoard : Node2D
         GD.Print(rank + " " + file);
         GD.Print(rank * 8 + file);
         GD.Print($"Piece on square: {board.Square[rank * 8 + file]}");
+        GD.Print($"squareindex: {squares[rank, file].SquareIndex}");
         SetSquareColor(rank, file, boardTheme.lightSquares.selected, boardTheme.darkSquares.selected);
     }
 
@@ -45,13 +46,16 @@ public partial class ChessBoard : Node2D
             {
                 Square square = squareScene.Instantiate<Square>();
                 square.Initialize(rank, file);
-                var windowSize = DisplayServer.ScreenGetSize();
+                Vector2I windowSize = DisplayServer.ScreenGetSize();
                 square.Position = new Vector2(
                     square.File * 80 + (windowSize.X / 2 - 320),
-                    square.Rank * 80 + (windowSize.Y / 2 - 320)
+                    (7 - square.Rank) * 80 + (windowSize.Y / 2 - 320)
                 );
 
-                int piece = board.Square[square.Rank * 8 + square.File];
+                Label squareIndexLabel = square.GetNode<Label>("SquareIndex");
+                squareIndexLabel.Text = $"{square.Rank}, {square.File}";
+
+                int piece = board.Square[square.SquareIndex];
                 Sprite2D pieceSprite = square.GetNode<Sprite2D>("PieceSprite");
                 pieceSprite.Texture = pieceTheme.GetPieceTexture(piece);
 
@@ -90,8 +94,12 @@ public partial class ChessBoard : Node2D
                 var windowSize = DisplayServer.ScreenGetSize();
                 float boardOffsetX = windowSize.X / 2 - (8 * 40);
                 float boardOffsetY = windowSize.Y / 2 - (8 * 40);
+
                 int file = (int)((mousePos.X - boardOffsetX) / 80);
-                int rank = (int)((mousePos.Y - boardOffsetY) / 80);
+
+                // Flip the rank calculation
+                int clickedRankFromTop = (int)((mousePos.Y - boardOffsetY) / 80);
+                int rank = 7 - clickedRankFromTop;
 
                 if (file >= 0 && file < 8 && rank >= 0 && rank < 8)
                 {

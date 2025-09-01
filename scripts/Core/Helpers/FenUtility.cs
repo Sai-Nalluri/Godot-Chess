@@ -13,14 +13,14 @@ public class FenUtility
 
         // Load the board
         int file = 0;
-        int rank = 0;
+        int rank = 7;
 
         foreach (char symbol in sections[0])
         {
             if (symbol == '/')
             {
                 file = 0;
-                rank++;
+                rank--;
             }
             else
             {

@@ -9,6 +9,11 @@ script = ExtResource("1_rb13l")
 offset_right = 80.0
 offset_bottom = 80.0
 
+[node name="SquareIndex" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 16
+
 [node name="PieceSprite" type="Sprite2D" parent="."]
 z_index = 3
 position = Vector2(40, 40)

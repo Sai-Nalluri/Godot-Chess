@@ -9,6 +9,8 @@ public partial class Square : Node2D
     public int Rank { get; private set; }
     [Export(PropertyHint.Range, "0, 7, 1")]
     public int File { get; private set; }
+    [Export(PropertyHint.Range, "0, 63, 1")]
+    public int SquareIndex { get; private set; }
     private ColorRect _background;
     private Sprite2D _pieceSprite;
 
@@ -24,6 +26,7 @@ public partial class Square : Node2D
     {
         Rank = rank;
         File = file;
+        SquareIndex = rank * 8 + file;
     }
 
     public void SetBackgroundColor(Color color)
