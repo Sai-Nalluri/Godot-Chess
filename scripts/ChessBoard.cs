@@ -10,6 +10,7 @@ public partial class ChessBoard : Node2D
     [Signal] public delegate void SquareClickedEventHandler(int rank, int file);
 
     private Square[,] squares = new Square[8, 8];
+    private Square selectedSquare;
 
     BoardTheme boardTheme;
     PieceTheme pieceTheme;
@@ -103,7 +104,26 @@ public partial class ChessBoard : Node2D
 
                 if (file >= 0 && file < 8 && rank >= 0 && rank < 8)
                 {
-                    EmitSignal(SignalName.SquareClicked, squares[rank, file].Rank, squares[rank, file].File);
+                    Square clickedSquare = squares[rank, file];
+
+                    // Clear pervious highlight
+                    if (selectedSquare != null)
+                    {
+                        bool isWhite = (selectedSquare.Rank + selectedSquare.File) % 2 == 0;
+                        selectedSquare.SetBackgroundColor(isWhite ? boardTheme.lightSquares.normal : boardTheme.darkSquares.normal);
+                    }
+
+                    // Check if square has a piece
+                    int piece = board.Square[(7 - rank) * 8 + file];
+                    if (piece != 0)
+                    {
+                        EmitSignal(SignalName.SquareClicked, squares[rank, file].Rank, squares[rank, file].File);
+                        selectedSquare = clickedSquare;
+                    }
+                    else
+                    {
+                        selectedSquare = null;
+                    }
                 }
             }
         }
